@@ -24,11 +24,18 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from projects.views import ProfileViewSet, ProjectViewSet
+from projects.views import (
+    CertificateViewSet,
+    CertifyingInstitutionViewSet,
+    ProfileViewSet,
+    ProjectViewSet,
+)
 
 router = routers.DefaultRouter()
 router.register(r"profiles", ProfileViewSet)
 router.register(r"projects", ProjectViewSet)
+router.register(r"certificates", CertificateViewSet)
+router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

@@ -79,3 +79,91 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CertifyingInstitution(models.Model):
+    name = models.CharField(max_length=100, null=False, blank=False)
+    url = models.URLField(null=False, blank=False, max_length=500)
+    certificates = models.ManyToManyField(
+        Project,
+        related_name="certifying_institutions",
+        blank=False,
+        null=False,
+        max_length=500,
+    )
+
+    def get_certifying_institutions(self):
+        return CertifyingInstitution.objects.all()
+
+    def get_certifying_institution_by_id(self, id):
+        return CertifyingInstitution.objects.get(id=id)
+
+    def create_certifying_institution(self, name, url):
+        return CertifyingInstitution.objects.create(name=name, url=url)
+
+    def update_certifying_institution(self, id, name, url):
+        certifying_institution = CertifyingInstitution.objects.get(id=id)
+        certifying_institution.name = name
+        certifying_institution.url = url
+        certifying_institution.save()
+
+    def delete_certifying_institution(self, id):
+        certifying_institution = CertifyingInstitution.objects.get(id=id)
+        certifying_institution.delete()
+
+    def __str__(self):
+        return self.name
+
+
+class Certificate(models.Model):
+    name = models.CharField(max_length=100, null=False, blank=False)
+    certifying_institution = models.ForeignKey(
+        CertifyingInstitution,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        max_length=500,
+    )
+    timestamp = models.DateTimeField(
+        auto_now_add=True, null=False, blank=False, max_length=500
+    )
+    profiles = models.ManyToManyField(
+        Profile,
+        related_name="certificates",
+        blank=False,
+        null=False,
+        max_length=500,
+    )
+
+    def get_certificates(self):
+        return Certificate.objects.all()
+
+    def get_certificate_by_id(self, id):
+        return Certificate.objects.get(id=id)
+
+    def create_certificate(
+        self, name, certifying_institution, timestamp, profiles
+    ):
+        return Certificate.objects.create(
+            name=name,
+            certifying_institution=certifying_institution,
+            timestamp=timestamp,
+            profiles=profiles,
+        )
+
+    def update_certificate(
+        self, id, name, certifying_institution, timestamp, profiles
+    ):
+        certificate = Certificate.objects.get(id=id)
+        certificate.name = name
+        certificate.certifying_institution = certifying_institution
+        certificate.timestamp = timestamp
+        certificate.profiles = profiles
+        certificate.save()
+
+    def delete_certificate(self, id):
+        certificate = Certificate.objects.get(id=id)
+        certificate.delete()
+
+    def __str__(self):
+        return self.name
