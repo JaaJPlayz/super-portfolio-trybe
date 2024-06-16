@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .models import Profile, Project, Certificate, CertifyingInstitution
+from .models import Certificate, CertifyingInstitution, Profile, Project
 from .serializers import (
     CertificateSerializer,
     CertifyingInstitutionSerializer,
