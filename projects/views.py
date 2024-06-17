@@ -19,10 +19,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         if request.method == "GET":
-            # busque o id do perfil
-            # crie uma variável para guardar esse perfil
-
             person = Profile.objects.get(id=kwargs["pk"])
+            projects = self.get_object().projects.all()
+            certs = self.get_object().certificates.all()
 
             return render(
                 request,
@@ -32,6 +31,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
                     "github": person.github,
                     "linkedin": person.linkedin,
                     "bio": person.bio,
+                    "projects": projects,
+                    "certificates": certs,
                 },
             )
 

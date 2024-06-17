@@ -12,5 +12,21 @@
   <p>GitHub: {{ github }}</p>
   <p>LinkedIn: {{ linkedin }}</p>
   <p>Bio: {{ bio }}</p>
+
+  <h2>Projects</h2>
+  {% for project in projects %}
+    <p>{{ project.name }}</p>
+    <p>{{ project.description }}</p>
+    <p>{{ project.github_url }}</p>
+    <p>{{ project.keyword }}</p>
+    <p>{{ project.key_skill }}</p>
+    <p>{{ project.profile }}</p>
+  {% endfor %}
+  
+  <h2>Certificates</h2>
+  {% for cert in certificates %}
+    <p>{{ cert.name }}</p>
+    <p>{{ cert.certifying_institution.name }}</p>
+  {% endfor %}
 </body>
 </html>
